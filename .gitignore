@@ -1,0 +1,8 @@
+.env
+config/token_cache.json
+config/config.json
+resumeArambh.pdf
+data/companies.csv
+data/companies.csv.bak
+__pycache__
+

@@ -1,0 +1,19 @@
+Hi [ContactPersonName],
+
+I hope you're doing well.
+
+I'm [YourName], a developer passionate about blockchain systems, backend engineering, and AI automation. I’m reaching out to express my interest in the [JobTitle] internship opportunity at [CompanyName].
+
+I’ve been following [CompanyName]’s work in [SpecificArea] I deeply admire how your team is pushing the boundaries, [Reason].
+
+I’ve built several projects that align closely with your mission — including StreakSafe, a decentralized habit protocol on Solana, and Solana-TUI, a Rust-based CLI tool for real-time Solana CLI automation.  
+
+You can find my portfolio here: [YourPortfolioLink]  
+
+I’d love the opportunity to contribute to [CompanyName] and learn from your team.  
+Thank you for your time and consideration.
+
+Best regards,  
+[YourName]
+[YourLinkedIn]
+[YourGithub]

@@ -1,0 +1,20 @@
+{
+    "email": {
+        "smtp_server": "smtp.office365.com",
+        "smtp_port": 587,
+        "username":"", 
+        "client_id": "" 
+    },
+    "user_info": {
+        "name": "", 
+        "portfolio_link": "", 
+        "resume_link": "", 
+        "resume_path": "", 
+        "github_link": "", 
+        "linkedin_link": "" 
+    },
+    "personalization": {
+        "enabled": true,
+        "prompt_strength": "friendly"
+    }
+}
