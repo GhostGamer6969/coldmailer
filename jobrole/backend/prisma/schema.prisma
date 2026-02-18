@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  resumes   Resume[]
+}
+
+model Resume {
+  id            String        @id @default(uuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  originalName  String
+  filePath      String
+  mimeType      String
+  extractedText String?       @db.Text
+  status        ProcessStatus @default(UPLOADED)
+  currentStep   Int           @default(0)
+  error         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  skillProfile  SkillProfile?
+  jobRoles      JobRole[]
+  companies     Company[]
+  people        Person[]
+  outreachLeads OutreachLead[]
+}
+
+model SkillProfile {
+  id              String   @id @default(uuid())
+  resumeId        String   @unique
+  resume          Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  skills          String[] @default([])
+  tools           String[] @default([])
+  techStack       String[] @default([])
+  domains         String[] @default([])
+  experienceLevel String   @default("mid")
+  rawJson         Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model JobRole {
+  id        String   @id @default(uuid())
+  resumeId  String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  title     String
+  createdAt DateTime @default(now())
+
+  @@index([resumeId])
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  resumeId  String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  name      String
+  website   String?
+  industry  String?
+  hiringFor String
+  source    String?
+  createdAt DateTime @default(now())
+  people    Person[]
+
+  @@index([resumeId])
+}
+
+model Person {
+  id          String   @id @default(uuid())
+  resumeId    String
+  resume      Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  fullName    String
+  jobTitle    String
+  linkedinUrl String?
+  createdAt   DateTime @default(now())
+
+  @@index([resumeId])
+  @@index([companyId])
+}
+
+model OutreachLead {
+  id              String   @id @default(uuid())
+  resumeId        String
+  resume          Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  personName      String
+  personTitle     String
+  companyName     String
+  companyWebsite  String?
+  hiringForRole   String
+  email           String?
+  emailConfidence Float?
+  linkedinUrl     String?
+  createdAt       DateTime @default(now())
+
+  @@index([resumeId])
+}
+
+enum ProcessStatus {
+  UPLOADED
+  EXTRACTING_TEXT
+  EXTRACTING_SKILLS
+  MAPPING_ROLES
+  DISCOVERING_COMPANIES
+  DISCOVERING_PEOPLE
+  ENRICHING_EMAILS
+  GENERATING_CSV
+  COMPLETED
+  FAILED
+}
